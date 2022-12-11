@@ -32,10 +32,6 @@ class Bot:
         botti.browser = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=botti.chrome_options)                            
         print("Botti alustettu!")
         
-    def alustaLippumaara(botti, maara):
-        botti.lippumaara = int(maara)
-        print(f"lippumäärä on {maara}")
-        
         
     #koko ostoprosessi lippujen ostoon.
     #yritetään ostaa ensimmäistä lippua, jossei voida, painetaan päivitä-nappia.
