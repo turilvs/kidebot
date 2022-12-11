@@ -16,7 +16,7 @@ class Application(tk.Frame):
         self.configure(background="#5e35b1")
         self.naytto()
 
-    #nostaa containerin päällimmäiseksi halutun framen
+    #nostaa parametrina tuodun framen päällimmäiseksi
     def raiseFrame(frame):
         frame.tkraise()
     
@@ -35,7 +35,7 @@ class Application(tk.Frame):
     def tulosta(laatikko, txt):
         laatikko.configure(insert=txt)
         
-    #Palautetaan perus nappi
+    #Luo ja palauttaa napin
     def nappi(parent, txt, tila, w, h):
         button = macButton(
             parent,
@@ -59,7 +59,7 @@ class Application(tk.Frame):
 
     #luodaan elementit käyttikseen
     def naytto(self):
-        self.master.title("v.1.0.0.2   © turilas")
+        self.master.title("v.1.0.0.2   ©artturi rantala")
         self.pack(fill=BOTH, expand=True)
         
         #ykkösframe, softan yläosa
@@ -136,7 +136,8 @@ class Application(tk.Frame):
                 Application.raiseFrame(frameOsta),
                 ])
 
-        #nappi, joka avaa selaimen ja vaihtaa 
+        #nappi, joka avaa selaimen, ja vaihtaa kideappin avaavan napin käytettäväksi. asettaa myös itsensä tilan niin, ettei nappia voida
+        #painaa uusiksi
         alustaBotti = Application.nappi(frameAlusta,"Alusta Botti", "normal", 200, 40)
         alustaBotti.pack(padx=2, pady=(4,8))
         alustaBotti.configure(command=lambda: [
@@ -146,7 +147,7 @@ class Application(tk.Frame):
                 Application.viesti(ikkuna, "Botti alustettu, etsi liput."),
                 ])
 
-        #nappi, joka avaa kideappin nettisivut
+        #nappi, joka avaa kideappin nettisivut ja vaihtaa loppujen nappien tilat käytettäväksi
         avaaKide = Application.nappi(frameAlusta,"Avaa KideApp", "disabled", 200, 40)
         avaaKide.pack(padx=2, pady=(4,0))
         avaaKide.configure(command=lambda: [
@@ -179,19 +180,7 @@ class Application(tk.Frame):
                 Bot.avaaSuosikit(self.bot),
                 ])
 
-        
-        lippumaara = tk.Entry(
-            frameOsta,
-            width= 10,
-            )
-        lippumaara.pack()
-        
-        alustaMaara = Application.nappi(frameOsta,"tallenna", "normal", 120, 40)
-        alustaMaara.pack()
-        alustaMaara.configure(command=lambda: [
-                Bot.alustaLippumaara(self.bot, lippumaara.get()),
-                ])
-
+        #pyöreä ostonappi, joka aloittaa ostoprosessin
         osta = cButton(
             frameOsta,
             text='Osta',
@@ -207,13 +196,11 @@ class Application(tk.Frame):
             disabledbackground="#e0dede",
             disabledforeground="#5331A1",
             takefocus=0,
-
             width=120,
             height=120,
             state= "disabled",
             )
         osta.pack(pady=(65,0))
-        
         
 def main():
     
