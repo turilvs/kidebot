@@ -17,7 +17,6 @@ class Bot:
         self.chrome_options = ""
         self.chrome_driver = ""
         self.browser = ""
-        self.lippumaara = 0
 
     #alustetaan botti käyttämään tiettyjä asetuksia ja driveria
     def alustaBotti(botti):
@@ -48,10 +47,8 @@ class Bot:
     #
     #yritetään lisää lippuja kunnes ostetut >= montakoLippua TAI ensimmäisen ostetun lipun jälkeen ollaan yritetty uusia lippuja tuloksetta kierros kertaa
 
-    
     def v2_botti(botti):
         
-        print(f"botin lippumäärä on {botti.lippumaara}")
         montakoLippua = 5
         kierros = 0
         ostetut = 0
@@ -79,7 +76,7 @@ class Bot:
         print('\naloitetaan lippujen osto')
         while True:
             try:    
-                print(kierros)
+                print(f"kierros numero {kierros}")
                 WebDriverWait(botti.browser, 0.05, 0.001,).until(
                 EC.presence_of_element_located(
                         (
@@ -117,18 +114,19 @@ class Bot:
                         jatkaOstoksia.click()
                         break
                     except:
-                        print(jatkamisYritys)
+                        print()
+                        print(f"yritetään jatkaa ostoksia, {jatkamisYritys}")
                         if jatkamisYritys > 3:
                             try:
                                 WebDriverWait(botti.browser, 0.5, 0.001,).until(
-                                EC.presence_of_element_located((By.XPATH,xpath_container)))
+                                EC.presence_of_element_located((By.XPATH,xpath_sulje_popup)))
                                 suljePopup = WebDriverWait(botti.browser, 0.5, 0.001,).until(
-                                EC.element_to_be_clickable((By.XPATH,xpath_container)))
+                                EC.element_to_be_clickable((By.XPATH,xpath_sulje_popup)))
                                 suljePopup.click()
                                 print("todennäköisesti täyttämättömiä tietoja, suljetaan popup")
+                                break
                             except:
                                 continue
-                        print("yritetään jatkaa")
                         jatkamisYritys += 1
                         continue
                         
