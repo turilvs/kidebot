@@ -103,11 +103,11 @@ class Application(tk.Frame):
         
         
         #logo ja sille pohja
-        logo = Image.open("/Users/Artturi/Koodaus/Python/kide_bot/content/KooBee.png")
-        resized_image = logo.resize((200, 50), Image.ANTIALIAS)
+        logo = Image.open("./content/KooBee.png")
+        resized_image = logo.resize((200, 50), Image.LANCZOS) #Image.ANTIALIAS
         kideBot = ImageTk.PhotoImage(resized_image)
 
-        logoPohja = Label(frame1, image=kideBot, width=198)
+        logoPohja = Label(frame1, background="#F5F5F5", image=kideBot, width=198)
         logoPohja.image = kideBot
         logoPohja.pack(
             side=LEFT,
@@ -115,7 +115,7 @@ class Application(tk.Frame):
         )
 
         #ikkuna viesteille
-        ikkuna = Message(frame1, text="Alusta Botti", width=200)
+        ikkuna = Message(frame1, background="#F5F5F5", fg="#000000", text="Alusta Botti", width=200)
         ikkuna.pack(
             fill=BOTH,
             expand=True,
@@ -206,7 +206,7 @@ def main():
     
     #luodaan root elementti, ja pyöräytetään tk mainloop käyntiin
     root = tk.Tk()
-    root.geometry("400x300+100+200")
+    root.geometry("400x300+2000+500")
     root.resizable(width=False, height=False)
     root.configure(bg="#5F37B1")
     app = Application()
