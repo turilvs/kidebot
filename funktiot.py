@@ -20,23 +20,33 @@ class Bot:
 
     # alustetaan botti käyttämään tiettyjä asetuksia ja driveria
     def alustaBotti(botti):
-        botti.options = webdriver.ChromeOptions()
-        botti.options.add_argument('--user-data-dir=/Users/artturirantala/Library/Application Support/Google/Chrome')
-        # botti.options.add_argument("start-maximized")
-        botti.options.add_argument("--remote-debugging-port=9222")
-        botti.options.add_argument("--window-size=1920,1300")
-        # botti.options.add_argument('--user-data-dir=/Users/Artturi/Library/Application Support/Google/Chrome/Default')
-        
-        # botti.options.add_experimental_option(
+        botti.chrome_options = webdriver.ChromeOptions()
+        botti.chrome_options.add_experimental_option(
+            "useAutomationExtension", False)
+        botti.chrome_options.add_experimental_option(
+            "excludeSwitches", ["enable-automation"])
+        botti.chrome_options.add_argument(
+            "--user-data-dir=/Users/artturirantala/Library/Application Support/Google/Chrome/Default")
+        botti.chrome_options.add_argument("--remote-debugging-port=9222")
+        botti.chrome_options.add_argument("--window-size=1920,1300")
+        botti.chrome_options.add_argument("--flag-switches-begin")
+        botti.chrome_options.add_argument("--flag-switches-end")
+
+        # botti.chrome_options.add_argument("start-maximized")
+        # botti.chrome_options.add_argument('--user-data-dir=/Users/Artturi/Library/Application Support/Google/Chrome/Default')
+        # botti.chrome_options.add_experimental_option(
         #     "debuggerAddress", "127.0.0.1:9222"
         # )
 
         # tiettyä chromedriveria käyttävä versio
-        # botti.driver = "/Users/artturirantala/Koodaus/Python/kide_bot/chromedriver"
-        # botti.browser = webdriver.Chrome(botti.driver, options=botti.chrome_options)
+        botti.driver = "/Users/artturirantala/Koodaus/Python/kide_bot/chromedriver"
+        botti.browser = webdriver.Chrome(
+            botti.driver, options=botti.chrome_options)
 
+        # botti.driver = Service(executable_path=ChromeDriverManager().install())
         # vaihtoehtoinen, automaattisesti chromedriverin päivittävä versio
-        botti.browser = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=botti.options)
+        # botti.browser = webdriver.Chrome(
+        #     service=botti.driver, options=botti.chrome_options)
         print("Botti alustettu!")
 
     # koko ostoprosessi lippujen ostoon.
@@ -132,7 +142,8 @@ class Bot:
                             0.5,
                             0.001,
                         ).until(
-                            EC.element_to_be_clickable((By.XPATH, xpath_jatka_ostoksia))
+                            EC.element_to_be_clickable(
+                                (By.XPATH, xpath_jatka_ostoksia))
                         )
                         jatkaOstoksia.click()
                         break
@@ -175,14 +186,15 @@ class Bot:
                 if ostettu == False:
                     try:
                         paivita = WebDriverWait(botti.browser, 0.05).until(
-                            EC.element_to_be_clickable((By.XPATH, xpath_paivita))
+                            EC.element_to_be_clickable(
+                                (By.XPATH, xpath_paivita))
                         )
                         paivita.click()
                         print("päivitetään")
                         continue
                     except:
                         continue
-                if ostetut >= montakoLippua: # or kierros >= 10
+                if ostetut >= montakoLippua:  # or kierros >= 10
                     print("\nlopetetaan")
                     break
                 kierros += 1
@@ -213,8 +225,7 @@ class Selain:
         # --user-data-dir="/Users/Artturi/Library/Application Support/Google/Chrome"
         call = 'Google\ Chrome --remote-debugging-port=9222 --user-data-dir="/Users/artturirantala/Library/Application Support/Google/Chrome/Default"'
         call2 = '/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --user-data-dir="/Users/artturirantala/Library/Application Support/Google/Chrome/Default"'
-                                                                                                 
-        
+
         # subprocess.Popen(call2, shell=True)
         print("Selain avattu")
         Bot.alustaBotti(botti)
