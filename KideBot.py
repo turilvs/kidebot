@@ -1,8 +1,6 @@
 import tkinter as tk
 import tkinter.font as TkFont
-
 from tkinter import *
-from PIL import Image, ImageTk
 from funktiot import Bot
 from funktiot import Selain
 from tkinter import Tk, RIGHT, BOTH, RAISED
@@ -34,9 +32,21 @@ class Application(tk.Frame):
             button['state'] = "normal"
 
     def changeColor(btn, colorbg, colorfg):
+        if colorbg == '#4f3a78':
+            btn.configure(
+                overbackground='#d4c6f5',
+                overforeground='#654E92',
+
+            )
+        else:
+            btn.configure(
+                overbackground='#654E92',
+                overforeground='white',
+            )
         btn.configure(
             bg=colorbg,
             fg=colorfg
+
         )
 
     # lähettää viestin käyttiksen yläosan viesti-ikkunaan
@@ -58,7 +68,7 @@ class Application(tk.Frame):
             background='white',
             overbackground='#d4c6f5',
             overforeground='#5331A1',
-            activebackground='#5331A1',
+            activebackground='#dcc2f2',
             activeforeground='white',
             disabledbackground="#917FB3",
             disabledforeground="#70618c",
@@ -133,22 +143,31 @@ class Application(tk.Frame):
         avaaAlustus = Application.nappi(frame2, "Alustus", "normal", 200, 50)
         avaaAlustus.pack(side="left")
         avaaAlustus.configure(
+            font=TkFont.Font(family="Verdana", size=20, weight="bold"),
+            borderwidth=3,
+            overbackground='',
+            overforeground='',
             background='#654E92',
             foreground='white',
             command=lambda: [
                 Application.raiseFrame(frameAlusta),
-                Application.changeColor(avaaOsto, 'white', '#5331A1'),
+                Application.changeColor(avaaOsto, '#4f3a78', 'white'),
                 Application.changeColor(avaaAlustus, '#654E92', 'white')
             ])
 
         # nappi, joka nostaa ostoframen sisältöineen containerin päälimmäiseksi
         avaaOsto = Application.nappi(frame2, "Osta", "normal", 200, 50)
         avaaOsto.pack(side="left")
-        avaaOsto.configure(command=lambda: [
-            Application.raiseFrame(frameOsta),
-            Application.changeColor(avaaAlustus, 'white', '#5331A1'),
-            Application.changeColor(avaaOsto, '#654E92', 'white')
-        ])
+        avaaOsto.configure(
+            font=TkFont.Font(family="Verdana", size=20, weight="bold"),
+            bg='#4f3a78',
+            fg='white',
+            borderwidth=3,
+            command=lambda: [
+                Application.raiseFrame(frameOsta),
+                Application.changeColor(avaaAlustus, '#4f3a78', 'white'),
+                Application.changeColor(avaaOsto, '#654E92', 'white')
+            ])
 
         # nappi, joka avaa selaimen, ja vaihtaa kideappin avaavan napin käytettäväksi. asettaa myös itsensä tilan niin, ettei nappia voida
         # painaa uusiksi
